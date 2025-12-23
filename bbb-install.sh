@@ -1258,8 +1258,8 @@ install_lti(){
     2> /dev/null 1>&2; then
     docker compose -f $LTI_DIR/docker-compose.yml exec -T broker bundle exec rake key:new["$LTI_KEY","$LTI_SECRET"] \
       2> /dev/null 1>&2 || err "failed to set LTI credentials $LTI_KEY:$LTI_SECRET."
-    # Enable the newly created key
-    docker compose -f $LTI_DIR/docker-compose.yml exec -T broker bundle exec rake key:enable:by["$LTI_KEY"] \
+    # Enable the newly created key (key:enable:by takes [field_name, field_value])
+    docker compose -f $LTI_DIR/docker-compose.yml exec -T broker bundle exec rake key:enable:by["key","$LTI_KEY"] \
       2> /dev/null 1>&2 || err "failed to enable LTI key $LTI_KEY."
 
       say "New LTI credentials for LTI KEY: $LTI_KEY were added and enabled!"
